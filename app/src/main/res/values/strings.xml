@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Movie Box</string>
+    <string name="film_list">Film List</string>
+    <string name="search">Search</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="err_network">Network unavailable</string>
+    <string name="err_movie_list">Could not fetch movies.</string>
+</resources>
