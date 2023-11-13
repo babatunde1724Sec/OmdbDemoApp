@@ -10,8 +10,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import retrofit2.await
 
-class MovieListPresenter(private val mViewModel: MovieListContractNew.ViewModel) :
-    MovieListContractNew.Presenter {
+class MovieListPresenter(private val mViewModel: MovieListContract.ViewModel) :
+    MovieListContract.Presenter {
 
     var mPage: Int = 1
     var mSearch: String = ""

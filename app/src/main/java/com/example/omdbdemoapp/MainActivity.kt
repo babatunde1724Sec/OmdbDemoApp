@@ -11,7 +11,7 @@ import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import com.example.omdbdemoapp.event.MessageEvent
+import com.example.omdbdemoapp.event.SearchEvent
 import com.example.omdbdemoapp.movielist.MovieListFragment
 import org.greenrobot.eventbus.EventBus
 
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 Handler(Looper.getMainLooper()).postDelayed({
-                    EventBus.getDefault().post(MessageEvent(query.trim()))
+                    EventBus.getDefault().post(SearchEvent(query.trim()))
                 }, 1000)
 
                 if (!searchView.isIconified) {

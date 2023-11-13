@@ -4,7 +4,7 @@ import com.example.omdbdemoapp.base.BaseView
 import com.example.omdbdemoapp.model.Movie
 import com.example.omdbdemoapp.widget.EndlessRecyclerOnScrollListener
 
-interface MovieListContractNew {
+interface MovieListContract {
     interface ViewModel : BaseView<Presenter> {
         fun showMovies(movies: List<Movie>)
         fun showSnack(message: String)

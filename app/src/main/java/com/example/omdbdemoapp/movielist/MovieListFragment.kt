@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.omdbdemoapp.event.MessageEvent
+import com.example.omdbdemoapp.event.SearchEvent
 import com.example.omdbdemoapp.R
 import com.example.omdbdemoapp.constants.Constants
 import com.example.omdbdemoapp.databinding.FragmentMovieBinding
@@ -20,7 +20,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class MovieListFragment : Fragment(), MovieListContractNew.ViewModel {
+class MovieListFragment : Fragment(), MovieListContract.ViewModel {
     private var _binding: FragmentMovieBinding? = null
     private val binding get() = _binding!!
     private var mListPresenter: MovieListPresenter? = null
@@ -39,7 +39,7 @@ class MovieListFragment : Fragment(), MovieListContractNew.ViewModel {
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(event: MessageEvent?) {
+    fun onMessageEvent(event: SearchEvent?) {
         if (event?.message != null) {
             _binding?.tvSearchTitle?.text = event.message.toString()
             mMovie.clear()
