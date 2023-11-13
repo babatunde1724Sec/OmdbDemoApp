@@ -1,5 +1,5 @@
 package com.example.omdbdemoapp.event
 
-class MessageEvent(query: String) {
+class SearchEvent(query: String) {
     var message: String? = query
 }
