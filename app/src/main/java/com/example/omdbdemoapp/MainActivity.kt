@@ -8,7 +8,6 @@ import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.Window
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -33,10 +32,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun hideStatusBar() {
-        this.window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
+        this.window.statusBarColor = getColor(R.color.colorPrimaryDark)
     }
 
     private fun setUpToolBar() {
