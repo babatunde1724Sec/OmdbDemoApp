@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.omdbdemoapp.reporsitory.MovieRepository
 import com.example.omdbdemoapp.event.SearchEvent
 import com.example.omdbdemoapp.R
 import com.example.omdbdemoapp.constants.Constants
@@ -72,7 +73,7 @@ class MovieListFragment : Fragment(), MovieListContract.ViewModel {
     }
 
     private fun init() {
-        mListPresenter = MovieListPresenter(this)
+        mListPresenter = MovieListPresenter(this, MovieRepository())
         if (!TextUtils.isEmpty(savedTitle)) {
             _binding?.tvSearchTitle?.text = savedTitle
         } else {
