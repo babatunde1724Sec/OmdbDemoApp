@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.omdbdemoapp.R
 import com.example.omdbdemoapp.model.Movie
+import com.squareup.picasso.Picasso
 
 class MovieListAdapter(
     private var movieList: ArrayList<Movie>,
@@ -30,15 +29,12 @@ class MovieListAdapter(
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val currentMovie = movieList[position]
         if (!TextUtils.isEmpty(currentMovie.poster)) {
-            Glide.with(holder.imageView.context).load(currentMovie.poster)
-                .error(R.drawable.poster_placeholder)
-                .fallback(R.drawable.poster_placeholder)
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.DATA)
+            Picasso.get().load(currentMovie.poster)
+                .placeholder(R.drawable.poster_placeholder)
                 .into(holder.imageView)
-        }
-        if (!TextUtils.isEmpty(currentMovie.title)) {
-            holder.title.text = currentMovie.title
+            if (!TextUtils.isEmpty(currentMovie.title)) {
+                holder.title.text = currentMovie.title
+            }
         }
 
         holder.imageView.setOnClickListener {
