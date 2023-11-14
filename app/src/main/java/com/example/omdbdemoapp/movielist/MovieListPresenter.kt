@@ -1,26 +1,20 @@
 package com.example.omdbdemoapp.movielist
 
-import com.example.omdbdemoapp.constants.Constants
+import android.text.TextUtils
+import com.example.omdbdemoapp.reporsitory.MovieRepository
 import com.example.omdbdemoapp.model.Movie
-import com.example.omdbdemoapp.rest.ApiClient
-import com.example.omdbdemoapp.rest.ApiInterface
 import com.example.omdbdemoapp.widget.EndlessRecyclerOnScrollListener
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import retrofit2.await
 
-class MovieListPresenter(private val mViewModel: MovieListContract.ViewModel) :
+class MovieListPresenter(private val mViewModel: MovieListContract.ViewModel, private val movieRepository: MovieRepository) :
     MovieListContract.Presenter {
 
     var mPage: Int = 1
     var mSearch: String = ""
     private var onLoadMoreListener: EndlessRecyclerOnScrollListener? = null
-    private var mMovieList: List<Movie>? = null
 
     override fun fetchMovieByName(search: String) {
         mSearch = search
-        getMoviesByType2(search, mPage)
+        fetchMovies(mSearch, mPage)
     }
 
     override fun addEndlessListener() {
@@ -32,30 +26,24 @@ class MovieListPresenter(private val mViewModel: MovieListContract.ViewModel) :
         onLoadMoreListener = object : EndlessRecyclerOnScrollListener() {
             override fun onLoadMore() {
                 mPage++
-                getMoviesByType2(mSearch, mPage)
+                fetchMovies(mSearch, mPage)
             }
         }
     }
 
-    private fun getMoviesByType2(search: String, page: Int) {
+    private fun fetchMovies(search: String, page: Int) {
         mViewModel.showLoading()
-        val apiService = ApiClient.client.create(ApiInterface::class.java)
-        GlobalScope.launch(Dispatchers.Main) {
-            val response =
-                apiService.getMovies(Constants.TYPE_MOVIE, Constants.API_KEY, search, page)
-            try {
-                val res = response.await()
-                if (res.response) {
-                    mMovieList = res.results
-                    mViewModel.hideLoading()
-                    mViewModel.showMovies(mMovieList!!)
-                } else {
-                    mViewModel.hideLoading()
-                }
-            } catch (e: Exception) {
+        movieRepository.getMoviesBySearch(search, page, object : MovieRepository.RepositoryCallback<List<Movie>> {
+            override fun onSuccess(movieList: List<Movie>?) {
                 mViewModel.hideLoading()
-                mViewModel.showSnack(e.message.toString())
+                mViewModel.showMovies(movieList!!)
             }
-        }
+            override fun onError(error: String) {
+                mViewModel.hideLoading()
+                if(!TextUtils.isEmpty(error)){
+                    mViewModel.showSnack(error)
+                }
+            }
+        })
     }
 }
