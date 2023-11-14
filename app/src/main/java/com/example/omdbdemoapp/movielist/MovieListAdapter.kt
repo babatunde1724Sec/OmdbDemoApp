@@ -32,9 +32,9 @@ class MovieListAdapter(
             Picasso.get().load(currentMovie.poster)
                 .placeholder(R.drawable.poster_placeholder)
                 .into(holder.imageView)
-            if (!TextUtils.isEmpty(currentMovie.title)) {
-                holder.title.text = currentMovie.title
-            }
+        }
+        if (!TextUtils.isEmpty(currentMovie.title)) {
+            holder.title.text = currentMovie.title
         }
 
         holder.imageView.setOnClickListener {
